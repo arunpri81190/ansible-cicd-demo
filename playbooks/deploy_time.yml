@@ -1,0 +1,17 @@
+- name: Deplay and run time.py in slave
+  hosts: slaves
+  become: yes
+  tasks:
+    - name: Copy time.py to slave
+      copy:
+        src: /home/ubuntu/ansible-cicd-demo/scripts/time.py
+        dest: /home/ubuntu/time.py
+        mode: '0755'
+    - name: Run time.py in slave
+      command: python3 /home/ubuntu/time.py
+      register: output
+
+    - name: Show script output
+      debug:
+        var: output.stdout
+
